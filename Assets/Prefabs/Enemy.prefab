@@ -59,7 +59,6 @@ GameObject:
   - component: {fileID: 7983049055789803369}
   - component: {fileID: 7983049055789803154}
   - component: {fileID: 7983049055789803372}
-  - component: {fileID: 7983049055789803155}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -81,7 +80,7 @@ Transform:
   m_Children:
   - {fileID: 7983049053945511738}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7983049055789803374
 SpriteRenderer:
@@ -217,23 +216,12 @@ MonoBehaviour:
   combat: {fileID: 7983049053945511739}
   castPoint: {fileID: 7983049053945511738}
   currentHealth: 0
-  isAttacking: 0
---- !u!114 &7983049055789803155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7983049055789803368}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f60f77c3d04f8eb0665452f5f4189b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   leftEdge: {fileID: 0}
   rightEdge: {fileID: 0}
   canPatrol: 1
+  playerAboveEnemy: 0
   moveSpeed: 0.5
   movingRight: 0
   target: {fileID: 0}
-  range: 10
+  range: 0.2
+  isAttacking: 0

@@ -9,14 +9,23 @@ public class Enemy : MonoBehaviour
         private Rigidbody2D rb;
         private Animator animator;
         private SpriteRenderer spriteRenderer;
-        private EnemyPatrol patrol;
+        private PlayerController player;
         [Header("Health")]
         [SerializeField] private float currentHealth;
         private const float maxHealth = 100f;
         private bool isDead;
-        public bool isAttacking;
- 
-
+        [Header ("Patrol Points")]
+        [SerializeField] private Transform leftEdge;
+        [SerializeField] private Transform rightEdge;
+        [SerializeField] private bool canPatrol = true;
+        [SerializeField] private bool playerAboveEnemy;
+        [Header("Movement")]
+        [SerializeField] private float moveSpeed;
+        [SerializeField] private bool movingRight;
+        [Header("Combat")] 
+        [SerializeField] private Transform target;
+        [SerializeField] private float range = 0.2f;
+        [SerializeField] private bool isAttacking;
 
         private void Awake()
         {
@@ -24,22 +33,52 @@ public class Enemy : MonoBehaviour
                 rb = GetComponent<Rigidbody2D>();
                 animator = GetComponent<Animator>();
                 spriteRenderer = GetComponent<SpriteRenderer>();
-                patrol = GetComponent<EnemyPatrol>();
-                FindObjectOfType<PlayerController>().enemyCount++;
         }
 
         private void FixedUpdate()
         {
-                if (isDead) StartCoroutine(Death());
                 FlipCharacter();
-                if (combat.LineOfSight()) patrol.canPatrol = false;
-                if (!patrol.canPatrol) patrol.ChasePlayer();
-                if (!isAttacking && !patrol.canPatrol && combat.LineOfSight()) animator.SetTrigger("Slam");
+                if (isDead) StartCoroutine(Death());
+                if (combat.LineOfSight()) canPatrol = false;
+                if (!canPatrol && !isAttacking) ChasePlayer();
+                if (!isAttacking && !canPatrol && combat.LineOfSight()) animator.SetTrigger("Slam");
+                if (!isAttacking && canPatrol)
+                { 
+                        animator.SetBool("IsWalking", true);
+                        if (movingRight & transform.localPosition.x > rightEdge.position.x) movingRight = false;
+                        else if (!movingRight & transform.localPosition.x < leftEdge.position.x) movingRight = true;
+                        rb.velocity = movingRight 
+                                ? rb.velocity = new Vector3(moveSpeed, rb.velocity.y, 0.0f) 
+                                : rb.velocity = new Vector3(-moveSpeed, rb.velocity.y, 0.0f);
+                } else if (!canPatrol && !playerAboveEnemy)
+                {
+                        if (movingRight & transform.localPosition.x > target.position.x) movingRight = false;
+                        else if (!movingRight & transform.localPosition.x < target.position.x) movingRight = true;
+                }
+        }
+        
+        private void ChasePlayer()
+        {
+                float distanceToPlayer = Vector2.Distance(transform.position, target.position);
+                if (distanceToPlayer > range)
+                {
+                        canPatrol = true;
+                        player.inCombat = false;
+                        isAttacking = false;
+                        return;
+                }
+                if (distanceToPlayer < 0.16f) rb.velocity = Vector2.zero;
+                if (distanceToPlayer < range && !isAttacking)
+                {
+                        rb.velocity = movingRight 
+                                ? rb.velocity = new Vector3(moveSpeed, rb.velocity.y, 0.0f) 
+                                : rb.velocity = new Vector3(-moveSpeed, rb.velocity.y, 0.0f);
+                }
         }
         
         private void FlipCharacter()
         {
-                switch (patrol.movingRight)
+                switch (movingRight)
                 {
                         case true:
                                 spriteRenderer.flipX = true;
@@ -61,27 +100,25 @@ public class Enemy : MonoBehaviour
 
         public IEnumerator EnemyAttack()
         {
+                rb.velocity = Vector2.zero;
+                isAttacking = true;
                 if (combat.LineOfSight())
                 {
                         yield return new WaitForSeconds(0.45f);
-                        FindObjectOfType<PlayerController>().showDamageOnHUD();
-                        FindObjectOfType<PlayerController>().UpdateHealth(-50f);
-                        FindObjectOfType<PlayerController>().inCombat = true;
+                        player.showDamageOnHUD();
+                        player.UpdateHealth(-50f);
+                        player.inCombat = true;
                 }
+                isAttacking = false;
                 yield return new WaitForSeconds(0.2f);
                 animator.ResetTrigger("Slam");
         }
-
-        public void IsAttacking()
-        {
-                isAttacking = !isAttacking;
-        }
+        
         private IEnumerator Death()
         {
                 animator.SetBool("IsDead", true);
                 yield return new WaitForSeconds(1f);
-                FindObjectOfType<PlayerController>().inCombat = false;
-                FindObjectOfType<PlayerController>().enemyCount--;
+                player.inCombat = false;
                 Destroy(gameObject);
         }
 }

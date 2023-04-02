@@ -58,9 +58,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Image healthBar;
     [SerializeField] private Image staminaBar;
     [SerializeField] private GameObject gotHit;
-
-    public float enemyCount;
-
+    
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -103,7 +101,6 @@ public class PlayerController : MonoBehaviour
 
         StartCoroutine(resetShowDamageOnHUD());
 
-        if (enemyCount == 0) StartCoroutine(Win());
     }
 
     private IEnumerator Win()
