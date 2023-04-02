@@ -131,6 +131,7 @@ public class PlayerController : MonoBehaviour
         {
             if (context.performed)
             {
+                canDash = false;
                 UpdateStamina(-jumpStaminaCost);
                 if (coyoteTimeCounter >= 0f && jumpBufferTimeCounter >= 0f)
                 {
@@ -145,6 +146,7 @@ public class PlayerController : MonoBehaviour
 
             if (context.canceled && rb.velocity.y > 0)
             {
+                canDash = true;
                 rb.velocity = new Vector2(rb.velocity.x + 0.1f, rb.velocity.y * 0.5f);
                 coyoteTimeCounter = 0f;
                 jumpBufferTimeCounter = 0f;
