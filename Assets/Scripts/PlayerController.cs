@@ -319,6 +319,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Death()
     {
         animator.SetBool("IsDead", isDead);
+        dust.Stop();
         PlayerInput input = GetComponent<PlayerInput>();
         input.actions.Disable();
         yield return new WaitForSeconds(2.5f);
