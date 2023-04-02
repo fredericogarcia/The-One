@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
         [SerializeField] private float currentHealth;
         private const float maxHealth = 100f;
         private bool isDead;
-        public bool isAttacking = false;
+        public bool isAttacking;
  
 
 
@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour
                 FindObjectOfType<PlayerController>().enemyCount++;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
                 if (isDead) StartCoroutine(Death());
                 FlipCharacter();

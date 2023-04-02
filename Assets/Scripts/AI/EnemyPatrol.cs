@@ -29,6 +29,8 @@ public class EnemyPatrol : MonoBehaviour
  
     private void Update()
     {
+        if (target.position.y > transform.position.y) return;
+ 
         if (!enemy.isAttacking)
         {
             animator.SetBool("IsWalking", true);
@@ -47,6 +49,7 @@ public class EnemyPatrol : MonoBehaviour
                 else if (!movingRight & transform.localPosition.x < target.position.x) movingRight = true;
             }
         }
+        
 
     }
     
