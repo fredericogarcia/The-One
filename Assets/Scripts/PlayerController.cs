@@ -55,8 +55,8 @@ public class PlayerController : MonoBehaviour
     private float staminaToDecrease;
     private bool beenHit;
     [Header("Player HUD")] 
-    [SerializeField] private Slider healthBar;
-    [SerializeField] private Slider staminaBar;
+    [SerializeField] private Image healthBar;
+    [SerializeField] private Image staminaBar;
     [SerializeField] private GameObject gotHit;
 
     public float enemyCount;
@@ -79,8 +79,8 @@ public class PlayerController : MonoBehaviour
         if (isJumping) dust.Play();
         FlipCharacter();
 
-        healthBar.value = HealthPercentage;
-        staminaBar.value = StaminaPercentage;
+        healthBar.fillAmount = HealthPercentage;
+        staminaBar.fillAmount = StaminaPercentage;
         
         isGrounded = IsGrounded;
         if (isGrounded)
