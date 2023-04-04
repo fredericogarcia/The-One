@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
     private float StaminaPercentage => currentStamina / maxStamina;
     private bool isDead;
     [Header("Combat")] 
+    [SerializeField] private bool debug;
     [SerializeField] private Transform aimingDirection;
     [SerializeField] private float lightAttackDamage = 10f;
     [SerializeField] private float lightAttackCost = 10f;
@@ -100,6 +101,8 @@ public class PlayerController : MonoBehaviour
         if (!inCombat) UpdateHealth(10f * Time.deltaTime);
 
         StartCoroutine(resetShowDamageOnHUD());
+
+        if (debug) combat.LineOfSight();
 
     }
 
