@@ -1324,10 +1324,6 @@ PrefabInstance:
       propertyPath: rightEdge
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 7983049053945511739, guid: 141acbd6f7fce91488ce6a3fc888deba, type: 3}
-      propertyPath: distance
-      value: 1.5
-      objectReference: {fileID: 0}
     - target: {fileID: 7983049055789803155, guid: 141acbd6f7fce91488ce6a3fc888deba, type: 3}
       propertyPath: target
       value: 
@@ -1458,10 +1454,6 @@ PrefabInstance:
     - target: {fileID: 8655468004964328099, guid: 3e441349e2c1dd24c930442c4dda82b1, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8655468004988624301, guid: 3e441349e2c1dd24c930442c4dda82b1, type: 3}
-      propertyPath: distance
-      value: 1.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

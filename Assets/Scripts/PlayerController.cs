@@ -227,24 +227,31 @@ public class PlayerController : MonoBehaviour
         currentStamina += value;
         if (currentStamina > 100f) currentStamina = MaxStamina;
     }
+    [SerializeField] private GameObject drinkHUD;
+    [SerializeField] private GameObject chocHUD;
 
-    public IEnumerator StaminaOvertime(int amountToIncrease)
+    public IEnumerator StaminaOvertime(int amountToIncrease, float interval)
     {
+        drinkHUD.SetActive(true);
         yield return new WaitForSeconds(2f);
         for (int i = 0; i < amountToIncrease; i++)
         {
             UpdateStamina(1f);
-            yield return new WaitForSeconds(0.035f);
+            yield return new WaitForSeconds(interval);
         }
+        drinkHUD.SetActive(false);
+
     }
     
-    public IEnumerator HealthOvertime(int amountToIncrease)
+    public IEnumerator HealthOvertime(int amountToIncrease, float interval)
     {
+        chocHUD.SetActive(true);
         for (int i = 0; i < amountToIncrease; i++)
         {
             UpdateHealth(1f);
-            yield return new WaitForSeconds(0.035f);
+            yield return new WaitForSeconds(interval);
         }
+        chocHUD.SetActive(false);
     }
 
     private IEnumerator resetCombat()

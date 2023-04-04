@@ -229,6 +229,7 @@ MonoBehaviour:
   dashStaminaCost: 25
   currentHealth: 0
   currentStamina: 0
+  debug: 0
   aimingDirection: {fileID: 8655468004751343337}
   lightAttackDamage: 25
   lightAttackCost: 20
@@ -239,7 +240,6 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   staminaBar: {fileID: 0}
   gotHit: {fileID: 0}
-  enemyCount: 0
 --- !u!114 &8655468004964328125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -569,7 +569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed280c3e8fd84164b87302d08d3995a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 5
+  distance: 1.1
 --- !u!1 &8655468005521817080
 GameObject:
   m_ObjectHideFlags: 0
