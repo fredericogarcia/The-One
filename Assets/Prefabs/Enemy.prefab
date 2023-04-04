@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 7983049055789803373}
   - component: {fileID: 7983049055789803369}
   - component: {fileID: 7983049055789803154}
-  - component: {fileID: 7983049055789803372}
+  - component: {fileID: 3788063565361831158}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -201,7 +201,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &7983049055789803372
+--- !u!114 &3788063565361831158
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -210,18 +210,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 7983049055789803368}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71f526ab7bdc455786ed2e9fdaefb5dc, type: 3}
+  m_Script: {fileID: 11500000, guid: c0464804200a59149b8ca641d54393ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  combat: {fileID: 7983049053945511739}
-  castPoint: {fileID: 7983049053945511738}
   currentHealth: 0
+  debug: 1
+  detectionRadius: 1
+  chaseRange: 5
+  attackRange: 0.5
+  detectionLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  movingRight: 0
+  movementSpeed: 0.5
   leftEdge: {fileID: 0}
   rightEdge: {fileID: 0}
-  canPatrol: 1
-  playerAboveEnemy: 0
-  moveSpeed: 0.5
-  movingRight: 0
-  target: {fileID: 0}
-  range: 0.2
   isAttacking: 0
+  targetFound: 0
+  target: {fileID: 0}
