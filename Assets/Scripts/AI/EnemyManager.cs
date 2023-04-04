@@ -102,6 +102,7 @@ public class EnemyManager : MonoBehaviour
             {
                 if (transform.localPosition.y < target.position.y)
                 {
+                    targetFound = false;
                     HandlePatrol();
                     return;
                 }

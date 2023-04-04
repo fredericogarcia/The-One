@@ -216,7 +216,7 @@ MonoBehaviour:
   currentHealth: 0
   debug: 0
   detectionRadius: 1
-  chaseRange: 5
+  chaseRange: 3
   attackRange: 0.5
   detectionLayer:
     serializedVersion: 2
@@ -225,7 +225,7 @@ MonoBehaviour:
   movingRight: 0
   movementSpeed: 0.5
   originalPosition: {x: 0, y: 0}
-  patrolDistance: 2
+  patrolDistance: 1
   isAttacking: 0
   targetFound: 0
   target: {fileID: 0}
