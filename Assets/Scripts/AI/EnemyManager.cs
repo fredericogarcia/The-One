@@ -102,7 +102,7 @@ public class EnemyManager : MonoBehaviour
             {
                 if (transform.localPosition.y < target.position.y)
                 {
-                    targetFound = false;
+                    ResetCombat();
                     HandlePatrol();
                     return;
                 }
@@ -113,6 +113,13 @@ public class EnemyManager : MonoBehaviour
                 break;
             }
         }
+    }
+
+    private void ResetCombat()
+    {
+        targetFound = false;
+        canMove = true;
+        player.inCombat = false;
     }
     
     private void HandlePatrol()
@@ -171,8 +178,8 @@ public class EnemyManager : MonoBehaviour
     {
         canMove = false;
         animator.SetBool("IsDead", true);
-        player.inCombat = false;
         yield return new WaitForSeconds(1f);
+        ResetCombat();
         Destroy(gameObject);
     }
     // DEBUG ONLY
