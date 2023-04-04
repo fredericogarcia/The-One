@@ -38,10 +38,10 @@ public class PlayerController : MonoBehaviour
     [Header("Health and Stamina")] 
     [SerializeField] private float currentHealth;
     [SerializeField] private float currentStamina;
-    private const float maxHealth = 100f;
-    private const float maxStamina = 100f;
-    private float HealthPercentage => currentHealth / maxHealth;
-    private float StaminaPercentage => currentStamina / maxStamina;
+    private const float MaxHealth = 100f;
+    private const float MaxStamina = 100f;
+    private float HealthPercentage => currentHealth / MaxHealth;
+    private float StaminaPercentage => currentStamina / MaxStamina;
     private bool isDead;
     [Header("Combat")] 
     [SerializeField] private bool debug;
@@ -67,8 +67,8 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         trail = GetComponent<TrailRenderer>();
         levelManager = FindObjectOfType<LevelManager>();
-        currentHealth = maxHealth;
-        currentStamina = maxStamina;
+        currentHealth = MaxHealth;
+        currentStamina = MaxStamina;
         canDash = true;
     }
 
@@ -218,14 +218,14 @@ public class PlayerController : MonoBehaviour
     public void UpdateHealth(float value)
     {
         currentHealth += value;
-        if (currentHealth > 100f) currentHealth = maxHealth;
+        if (currentHealth > 100f) currentHealth = MaxHealth;
         if (currentHealth <= 0) isDead = true;
     }
     
     private void UpdateStamina(float value)
     {
         currentStamina += value;
-        if (currentStamina > 100f) currentStamina = maxStamina;
+        if (currentStamina > 100f) currentStamina = MaxStamina;
     }
 
     public IEnumerator StaminaOvertime(int amountToIncrease)
