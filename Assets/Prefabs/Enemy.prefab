@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  debug: 1
+  debug: 0
   detectionRadius: 1
   chaseRange: 5
   attackRange: 0.5
@@ -224,9 +224,10 @@ MonoBehaviour:
   canMove: 1
   movingRight: 0
   movementSpeed: 0.5
-  leftEdge: {fileID: 0}
-  rightEdge: {fileID: 0}
+  originalPosition: {x: 0, y: 0}
+  patrolDistance: 2
   isAttacking: 0
   targetFound: 0
   target: {fileID: 0}
   castPoint: {fileID: 0}
+  slamDamage: 30

@@ -23,8 +23,8 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private bool canMove = true;
     [SerializeField] private bool movingRight;
     [SerializeField] private float movementSpeed;
-    [SerializeField] private Transform leftEdge;
-    [SerializeField] private Transform rightEdge;
+    [SerializeField] private Vector2 originalPosition;
+    [SerializeField] private float patrolDistance;
     [Header("Combat")] 
     [SerializeField] private bool isAttacking;
     [SerializeField] private bool targetFound;
@@ -41,6 +41,8 @@ public class EnemyManager : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         combat = GetComponentInChildren<LOSCombat>();
         currentHealth = MaxHealth;
+        originalPosition = transform.localPosition;
+
     }
 
     private void Update()
@@ -92,8 +94,8 @@ public class EnemyManager : MonoBehaviour
         switch (targetFound)
         {
             case false:
-                if (movingRight & transform.localPosition.x > rightEdge.position.x) movingRight = false;
-                else if (!movingRight & transform.localPosition.x < leftEdge.position.x) movingRight = true;
+                if (movingRight & transform.localPosition.x > originalPosition.x + patrolDistance) movingRight = false;
+                else if (!movingRight & transform.localPosition.x < originalPosition.x - patrolDistance) movingRight = true;
                 HandlePatrol();
                 break;
             case true when target != null:

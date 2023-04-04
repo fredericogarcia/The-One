@@ -1382,6 +1382,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3788063565361831158, guid: 141acbd6f7fce91488ce6a3fc888deba, type: 3}
+      propertyPath: debug
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3788063565361831158, guid: 141acbd6f7fce91488ce6a3fc888deba, type: 3}
       propertyPath: leftEdge
       value: 
       objectReference: {fileID: 669416155}
@@ -1393,10 +1397,6 @@ PrefabInstance:
       propertyPath: rightEdge
       value: 
       objectReference: {fileID: 2092995503}
-    - target: {fileID: 3788063565361831158, guid: 141acbd6f7fce91488ce6a3fc888deba, type: 3}
-      propertyPath: slamDamage
-      value: 25
-      objectReference: {fileID: 0}
     - target: {fileID: 7983049053945511739, guid: 141acbd6f7fce91488ce6a3fc888deba, type: 3}
       propertyPath: distance
       value: 1.5
