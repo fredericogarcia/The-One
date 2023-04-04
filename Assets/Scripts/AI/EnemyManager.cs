@@ -64,12 +64,21 @@ public class EnemyManager : MonoBehaviour
         switch (targetFound)
         {
             case false:
+                if (movingRight & transform.localPosition.x > rightEdge.position.x) movingRight = false;
+                else if (!movingRight & transform.localPosition.x < leftEdge.position.x) movingRight = true;
                 HandlePatrol();
                 break;
             case true when target != null:
             {
+                if (transform.localPosition.y < target.position.y)
+                {
+                    HandlePatrol();
+                    return;
+                }
                 float distanceToPlayer = Vector2.Distance(transform.position, target.position);
-                HandlePlayerChase(distanceToPlayer, chaseRange);
+                if (movingRight & transform.localPosition.x > target.position.x) movingRight = false;
+                else if (!movingRight & transform.localPosition.x < target.position.x) movingRight = true;
+                HandlePlayerChase(distanceToPlayer);
                 break;
             }
         }
@@ -78,25 +87,24 @@ public class EnemyManager : MonoBehaviour
     private void HandlePatrol()
     {
         animator.SetBool("IsWalking", true);
-        if (movingRight & transform.localPosition.x > rightEdge.position.x) movingRight = false;
-        else if (!movingRight & transform.localPosition.x < leftEdge.position.x) movingRight = true;
         rb.velocity = movingRight 
-            ? rb.velocity = new Vector3(movementSpeed, rb.velocity.y, 0.0f) 
-            : rb.velocity = new Vector3(-movementSpeed, rb.velocity.y, 0.0f);
+            ? rb.velocity = new Vector3(movementSpeed, 0.0f, 0.0f) 
+            : rb.velocity = new Vector3(-movementSpeed, 0.0f, 0.0f);
     }
 
-    private void HandlePlayerChase(float distanceToPlayer, float range)
+    private void HandlePlayerChase(float distanceToPlayer)
     {
-        if (distanceToPlayer < range && !isAttacking)
+        if (distanceToPlayer < chaseRange && distanceToPlayer > attackRange && !isAttacking)
         {
             rb.velocity = movingRight 
-                ? rb.velocity = new Vector3(movementSpeed, rb.velocity.y, 0.0f) 
-                : rb.velocity = new Vector3(-movementSpeed, rb.velocity.y, 0.0f);
+                ? rb.velocity = new Vector3(movementSpeed, 0.0f, 0.0f) 
+                : rb.velocity = new Vector3(-movementSpeed, 0.0f, 0.0f);
         }
     }
     
     private void FlipCharacter()
     {
+  
         spriteRenderer.flipX = movingRight switch
         {
             true => true,
