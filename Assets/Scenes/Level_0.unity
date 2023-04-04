@@ -2928,11 +2928,11 @@ RectTransform:
   m_Father: {fileID: 414179378}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -767, y: 301}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 142.99988, y: -200.99997}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &1666342220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3199,11 +3199,11 @@ RectTransform:
   m_Father: {fileID: 414179378}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -811, y: 301}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 98.999695, y: -200.99994}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &1757253643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6106,6 +6106,14 @@ PrefabInstance:
       propertyPath: gotHit
       value: 
       objectReference: {fileID: 1781656833}
+    - target: {fileID: 8655468004964328096, guid: 3e441349e2c1dd24c930442c4dda82b1, type: 3}
+      propertyPath: chocHUD
+      value: 
+      objectReference: {fileID: 1757253641}
+    - target: {fileID: 8655468004964328096, guid: 3e441349e2c1dd24c930442c4dda82b1, type: 3}
+      propertyPath: drinkHUD
+      value: 
+      objectReference: {fileID: 1666342218}
     - target: {fileID: 8655468004964328096, guid: 3e441349e2c1dd24c930442c4dda82b1, type: 3}
       propertyPath: healthBar
       value: 

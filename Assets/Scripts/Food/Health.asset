@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Health
   m_EditorClassIdentifier: 
   amountToHeal: 30
+  interval: 0.25

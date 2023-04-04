@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Stamina
   m_EditorClassIdentifier: 
   amountToIncreaseStamina: 30
+  interval: 0.025
