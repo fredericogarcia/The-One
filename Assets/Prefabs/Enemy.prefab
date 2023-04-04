@@ -221,6 +221,7 @@ MonoBehaviour:
   detectionLayer:
     serializedVersion: 2
     m_Bits: 64
+  canMove: 1
   movingRight: 0
   movementSpeed: 0.5
   leftEdge: {fileID: 0}
@@ -228,3 +229,4 @@ MonoBehaviour:
   isAttacking: 0
   targetFound: 0
   target: {fileID: 0}
+  castPoint: {fileID: 0}

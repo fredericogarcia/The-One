@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-public class RayCastCombat : MonoBehaviour
+public class LOSCombat : MonoBehaviour
 {
      [SerializeField] private float distance;
      public Collider2D LineOfSight()

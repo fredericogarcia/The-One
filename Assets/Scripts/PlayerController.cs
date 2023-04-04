@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private TrailRenderer trail;
     private LevelManager levelManager;
     [SerializeField] private ParticleSystem dust;
-    [SerializeField] private RayCastCombat combat;
+    [SerializeField] private LOSCombat combat;
     [Header("Player Movement")]
     [SerializeField] private float movementSpeed = 1.5f;
     [SerializeField] private float jumpHeight = 3.75f;
@@ -259,7 +259,7 @@ public class PlayerController : MonoBehaviour
                 if (combat.LineOfSight())
                 {
                     inCombat = true;
-                    combat.LineOfSight().gameObject.GetComponent<Enemy>().UpdateHealth(-damageToDeal);
+                    combat.LineOfSight().gameObject.GetComponent<EnemyManager>().UpdateHealth(-damageToDeal);
                     yield return new WaitForSeconds(0.1f);
                     damageToDeal = 0;
                 }

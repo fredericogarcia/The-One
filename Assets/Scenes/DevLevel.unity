@@ -933,6 +933,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1661699300 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7983049053945511738, guid: 141acbd6f7fce91488ce6a3fc888deba, type: 3}
+  m_PrefabInstance: {fileID: 7983049054697576338}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1781656833
 GameObject:
   m_ObjectHideFlags: 0
@@ -1381,9 +1386,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 669416155}
     - target: {fileID: 3788063565361831158, guid: 141acbd6f7fce91488ce6a3fc888deba, type: 3}
+      propertyPath: castPoint
+      value: 
+      objectReference: {fileID: 1661699300}
+    - target: {fileID: 3788063565361831158, guid: 141acbd6f7fce91488ce6a3fc888deba, type: 3}
       propertyPath: rightEdge
       value: 
       objectReference: {fileID: 2092995503}
+    - target: {fileID: 3788063565361831158, guid: 141acbd6f7fce91488ce6a3fc888deba, type: 3}
+      propertyPath: slamDamage
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7983049053945511739, guid: 141acbd6f7fce91488ce6a3fc888deba, type: 3}
+      propertyPath: distance
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7983049055789803155, guid: 141acbd6f7fce91488ce6a3fc888deba, type: 3}
       propertyPath: target
       value: 
