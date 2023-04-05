@@ -57,7 +57,6 @@ GameObject:
   - component: {fileID: 7983049055789803374}
   - component: {fileID: 7983049055789803373}
   - component: {fileID: 7983049055789803154}
-  - component: {fileID: 3788063565361831158}
   - component: {fileID: 3506410269204533372}
   m_Layer: 6
   m_Name: Enemy
@@ -175,36 +174,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &3788063565361831158
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7983049055789803368}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0464804200a59149b8ca641d54393ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentHealth: 0
-  debug: 0
-  detectionRadius: 1
-  chaseRange: 3
-  attackRange: 0.5
-  detectionLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  canMove: 1
-  movingRight: 0
-  movementSpeed: 0.5
-  originalPosition: {x: 0, y: 0}
-  patrolDistance: 1
-  isAttacking: 0
-  targetFound: 0
-  target: {fileID: 0}
-  castPoint: {fileID: 0}
-  slamDamage: 30
 --- !u!70 &3506410269204533372
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

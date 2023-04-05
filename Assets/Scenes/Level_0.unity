@@ -1335,11 +1335,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 36
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &570259266 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7983049053945511738, guid: 141acbd6f7fce91488ce6a3fc888deba, type: 3}
-  m_PrefabInstance: {fileID: 7983049054697576338}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &586347831
 GameObject:
   m_ObjectHideFlags: 0
@@ -1585,11 +1580,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 34
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &617182735 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7983049053945511738, guid: 141acbd6f7fce91488ce6a3fc888deba, type: 3}
-  m_PrefabInstance: {fileID: 1144905278}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &635771138
 GameObject:
   m_ObjectHideFlags: 0
@@ -2420,10 +2410,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3788063565361831158, guid: 141acbd6f7fce91488ce6a3fc888deba, type: 3}
-      propertyPath: castPoint
-      value: 
-      objectReference: {fileID: 617182735}
     - target: {fileID: 7983049055789803155, guid: 141acbd6f7fce91488ce6a3fc888deba, type: 3}
       propertyPath: target
       value: 
@@ -6027,10 +6013,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3788063565361831158, guid: 141acbd6f7fce91488ce6a3fc888deba, type: 3}
-      propertyPath: castPoint
-      value: 
-      objectReference: {fileID: 570259266}
     - target: {fileID: 7983049055789803155, guid: 141acbd6f7fce91488ce6a3fc888deba, type: 3}
       propertyPath: target
       value: 
@@ -6102,6 +6084,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8655468004964328096, guid: 3e441349e2c1dd24c930442c4dda82b1, type: 3}
+      propertyPath: debug
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8655468004964328096, guid: 3e441349e2c1dd24c930442c4dda82b1, type: 3}
       propertyPath: gotHit
       value: 

@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    [Header("Components")]
     private Rigidbody2D rb;
     private PlayerController player;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private LOSCombat combat;
-    
     [Header("Health System")] 
     [SerializeField] private float currentHealth;
     private bool isDead;
@@ -42,7 +42,6 @@ public class EnemyManager : MonoBehaviour
         combat = GetComponentInChildren<LOSCombat>();
         currentHealth = MaxHealth;
         originalPosition = transform.localPosition;
-
     }
 
     private void Update()
@@ -54,7 +53,6 @@ public class EnemyManager : MonoBehaviour
         }
         FlipCharacter();
         HandleMovement();
-        if (!targetFound) HandleDetection();
     }
     
     private void FlipCharacter()
@@ -97,12 +95,14 @@ public class EnemyManager : MonoBehaviour
                 if (movingRight & transform.localPosition.x > originalPosition.x + patrolDistance) movingRight = false;
                 else if (!movingRight & transform.localPosition.x < originalPosition.x - patrolDistance) movingRight = true;
                 HandlePatrol();
+                HandleDetection();
                 break;
             case true when target != null:
             {
                 if (transform.localPosition.y < target.position.y)
                 {
-                    ResetCombat();
+                    targetFound = false;
+                    canMove = true;
                     HandlePatrol();
                     return;
                 }
@@ -115,13 +115,6 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    private void ResetCombat()
-    {
-        targetFound = false;
-        canMove = true;
-        player.inCombat = false;
-    }
-    
     private void HandlePatrol()
     {
         if (canMove)
@@ -159,7 +152,6 @@ public class EnemyManager : MonoBehaviour
             yield return new WaitForSeconds(0.45f);
             player.showDamageOnHUD();
             player.UpdateHealth(-slamDamage);
-            player.inCombat = true;
         }
         isAttacking = false;
         canMove = true;
@@ -177,9 +169,9 @@ public class EnemyManager : MonoBehaviour
     private IEnumerator Death()
     {
         canMove = false;
+        targetFound = false;
         animator.SetBool("IsDead", true);
         yield return new WaitForSeconds(1f);
-        ResetCombat();
         Destroy(gameObject);
     }
     // DEBUG ONLY
