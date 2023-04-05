@@ -10,6 +10,5 @@ public class Stamina : FoodEffect
     public override void ApplyEffect(GameObject target)
     {
         target.GetComponent<PlayerController>().StartCoroutine(target.GetComponent<PlayerController>().StaminaOvertime(amountToIncreaseStamina, interval));
- 
     }
 }

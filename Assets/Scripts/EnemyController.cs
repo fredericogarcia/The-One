@@ -37,6 +37,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private Transform castPoint;
     [SerializeField] private bool isAttacking;
+    [SerializeField] private float attackDamage;
+
     
     private void Awake()
     {
@@ -49,6 +51,7 @@ public class EnemyController : MonoBehaviour
         originalPosition = transform.localPosition;
         state = State.Patrol;
     }
+    
     private void Update()
     {
         FlipCharacter();
@@ -167,7 +170,7 @@ public class EnemyController : MonoBehaviour
         {
             yield return new WaitForSeconds(0.45f);
             player.showDamageOnHUD();
-            player.UpdateHealth(-25);
+            player.UpdateHealth(-attackDamage);
         }
         isAttacking = false;
         yield return new WaitForSeconds(0.55f);

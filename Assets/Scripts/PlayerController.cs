@@ -60,6 +60,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Image healthBar;
     [SerializeField] private Image staminaBar;
     [SerializeField] private GameObject gotHit;
+    [SerializeField] private GameObject drinkHUD;
+    [SerializeField] private GameObject chocHUD;
     
     private void Awake()
     {
@@ -87,8 +89,7 @@ public class PlayerController : MonoBehaviour
         {
             coyoteTimeCounter = coyoteTime;
             jumpBufferTimeCounter = jumpBufferTime;
-        }
-        else
+        } else
         {
             coyoteTimeCounter -= Time.deltaTime;
             jumpBufferTimeCounter -= Time.deltaTime;
@@ -98,13 +99,14 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(Death());
         } 
+        
         UpdateStamina(10f * Time.deltaTime);
+        
         if (!inCombat) UpdateHealth(10f * Time.deltaTime);
 
         StartCoroutine(resetShowDamageOnHUD());
 
         if (debug) combat.LineOfSight();
-
     }
 
     private IEnumerator Win()
@@ -162,12 +164,14 @@ public class PlayerController : MonoBehaviour
         staminaToDecrease = lightAttackCost;
 
     }
+    
     public void OnHeavy(InputAction.CallbackContext context)
     {
         animator.SetTrigger("HeavyAttack");
         damageToDeal = heavyAttackDamage;
         staminaToDecrease = heavyAttackCost;
     }
+    
     public void OnDash(InputAction.CallbackContext context)
     {
         if (canDash) StartCoroutine(Dash());
@@ -193,9 +197,7 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(dashingCoolDown);
             canDash = true;
             animator.ResetTrigger("IsDashing");
-
         }
-
     }
    
     private void FlipCharacter()
@@ -216,6 +218,7 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
+    
     public void UpdateHealth(float value)
     {
         currentHealth += value;
@@ -228,8 +231,6 @@ public class PlayerController : MonoBehaviour
         currentStamina += value;
         if (currentStamina > 100f) currentStamina = MaxStamina;
     }
-    [SerializeField] private GameObject drinkHUD;
-    [SerializeField] private GameObject chocHUD;
 
     public IEnumerator StaminaOvertime(int amountToIncrease, float interval)
     {
@@ -305,6 +306,7 @@ public class PlayerController : MonoBehaviour
         UpdateHealth(-2.5f);
         showDamageOnHUD();
     }
+    
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Obstacle")) ObstacleDamage();
@@ -340,7 +342,3 @@ public class PlayerController : MonoBehaviour
         input.actions.Disable();
     }
 }
-
-
-
-// maybe add a can move shit? to force player to stop when dead

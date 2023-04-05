@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 [CreateAssetMenu(menuName = "Food/Health")]
 public class Health : FoodEffect

@@ -10,15 +10,7 @@ public class LOSCombat : MonoBehaviour
          RaycastHit2D hit = Physics2D.Linecast(transform.position, endPosition,
              1 << LayerMask.NameToLayer("Combat"));
 
-
-         if (hit.collider != null)
-         {
-             Debug.DrawLine(transform.position, endPosition, Color.green);
-         }
-         else
-         {
-             Debug.DrawLine(transform.position, endPosition, Color.blue);
-         }
+         Debug.DrawLine(transform.position, endPosition, hit.collider != null ? Color.green : Color.blue);
          return hit.collider;
      }
 }
