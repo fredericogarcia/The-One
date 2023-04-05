@@ -6086,7 +6086,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8655468004964328096, guid: 3e441349e2c1dd24c930442c4dda82b1, type: 3}
       propertyPath: debug
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8655468004964328096, guid: 3e441349e2c1dd24c930442c4dda82b1, type: 3}
       propertyPath: gotHit

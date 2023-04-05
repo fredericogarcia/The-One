@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 7983049055789803373}
   - component: {fileID: 7983049055789803154}
   - component: {fileID: 3506410269204533372}
+  - component: {fileID: 4101237301147348112}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -190,3 +191,33 @@ CapsuleCollider2D:
   m_Offset: {x: 0.0017014345, y: -0.05274427}
   m_Size: {x: 0.22145066, y: 0.48687273}
   m_Direction: 0
+--- !u!114 &4101237301147348112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7983049055789803368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 049ef6d3e3574e7d8586a4def732025b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  detectionLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  detectionRadius: 1
+  chaseRange: 1
+  attackRange: 0.5
+  distanceToPlayer: 0
+  debug: 0
+  currentHealth: 0
+  originalPosition: {x: 0, y: 0}
+  movementSpeed: 0.5
+  patrolDistance: 0.5
+  canMove: 1
+  movingRight: 0
+  target: {fileID: 0}
+  castPoint: {fileID: 7983049053945511738}
+  isAttacking: 0

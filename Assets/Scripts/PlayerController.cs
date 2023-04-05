@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpBufferTimeCounter;
     [SerializeField] private int jumpStaminaCost = 15;
     [Header("Dash")] 
-    [SerializeField] private bool canDash;
+    [SerializeField] private bool canDash = true;
     [SerializeField] private bool isDashing;
     [SerializeField] private float dashingPower;
     [SerializeField] private float dashingTime;
@@ -69,7 +69,6 @@ public class PlayerController : MonoBehaviour
         levelManager = FindObjectOfType<LevelManager>();
         currentHealth = MaxHealth;
         currentStamina = MaxStamina;
-        canDash = true;
     }
 
     private void Update()
@@ -269,7 +268,7 @@ public class PlayerController : MonoBehaviour
                 if (combat.LineOfSight())
                 {
                     inCombat = true;
-                    combat.LineOfSight().gameObject.GetComponent<EnemyManager>().UpdateHealth(-damageToDeal);
+                    combat.LineOfSight().gameObject.GetComponent<EnemyController>().UpdateHealth(-damageToDeal);
                     yield return new WaitForSeconds(0.1f);
                     damageToDeal = 0;
                 }
@@ -335,3 +334,6 @@ public class PlayerController : MonoBehaviour
         levelManager.LoadGameOver();
     }
 }
+
+
+// maybe add a can move shit? to force player to stop when dead
