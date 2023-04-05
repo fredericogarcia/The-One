@@ -36,8 +36,7 @@ public class EnemyController : MonoBehaviour
     [Header("Combat")] 
     [SerializeField] private Transform target;
     [SerializeField] private Transform castPoint;
-    [SerializeField] private bool isAttacking;
-    [SerializeField] private float attackDamage;
+    [SerializeField] private int attackDamage;
 
     
     private void Awake()
@@ -93,6 +92,9 @@ public class EnemyController : MonoBehaviour
                 break;
         }
   
+        // DEBUG ONLY
+        if (debug) combat.LineOfSight();
+        
     }
     
     private void FlipCharacter()
@@ -147,7 +149,7 @@ public class EnemyController : MonoBehaviour
         if (distanceToPlayer <= attackRange) state = State.Attacking;
         if (canMove)
         {
-            if (distanceToPlayer < chaseRange && distanceToPlayer > attackRange && !isAttacking)
+            if (distanceToPlayer < chaseRange && distanceToPlayer > attackRange)
             {
                 rb.velocity = movingRight 
                     ? rb.velocity = new Vector3(movementSpeed, 0.0f, 0.0f) 
@@ -165,14 +167,13 @@ public class EnemyController : MonoBehaviour
     
     public IEnumerator Attack()
     {
-        isAttacking = true;
+        if (distanceToPlayer <= 0.2f) state = State.Patrol;
         if (combat.LineOfSight())
         {
             yield return new WaitForSeconds(0.45f);
             player.showDamageOnHUD();
             player.UpdateHealth(-attackDamage);
         }
-        isAttacking = false;
         yield return new WaitForSeconds(0.55f);
         canMove = true;
     }
@@ -191,7 +192,6 @@ public class EnemyController : MonoBehaviour
         {
             Gizmos.color = Color.red; 
             Gizmos.DrawWireSphere(transform.position, detectionRadius);
-            combat.LineOfSight();
         }
     }
 }

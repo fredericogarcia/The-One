@@ -77,6 +77,7 @@ GameObject:
   - component: {fileID: 8655468004964328096}
   - component: {fileID: 8655468004964328125}
   - component: {fileID: 8655468004964328124}
+  - component: {fileID: 3263367047817911559}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -206,8 +207,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dust: {fileID: 8655468005521817077}
   combat: {fileID: 8655468004988624301}
-  movementSpeed: 1.5
-  jumpHeight: 3.75
+  movementSpeed: 1.66
+  jumpHeight: 3
   groundCheck: {fileID: 8655468004827223698}
   groundLayer:
     serializedVersion: 2
@@ -219,7 +220,7 @@ MonoBehaviour:
   jumpBufferTime: 0.2
   coyoteTimeCounter: 0
   jumpBufferTimeCounter: 0
-  jumpStaminaCost: 15
+  jumpStaminaCost: 7
   canDash: 0
   isDashing: 0
   dashingPower: 4
@@ -230,10 +231,9 @@ MonoBehaviour:
   currentStamina: 0
   debug: 0
   aimingDirection: {fileID: 8655468004751343337}
-  lightAttackDamage: 25
-  lightAttackCost: 20
-  heavyAttackDamage: 30
-  heavyAttackCost: 40
+  attackMinDamage: 10
+  attackMaxDamage: 30
+  attackCost: 15
   castPoint: {fileID: 8655468004988624302}
   inCombat: 0
   healthBar: {fileID: 0}
@@ -415,6 +415,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3263367047817911559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8655468004964328099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9046fc49eede1047b734be9352e4c2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabDamageText: {fileID: 5380174430705677771, guid: 039c132b35a14bd45abe21e945abaffa, type: 3}
 --- !u!1 &8655468004988624303
 GameObject:
   m_ObjectHideFlags: 0

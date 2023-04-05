@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private TrailRenderer trail;
     private LevelManager levelManager;
     private PlayerInput input;
+    private DamageText floatingText;
     [SerializeField] private ParticleSystem dust;
     [SerializeField] private LOSCombat combat;
     [Header("Player Movement")]
@@ -47,13 +48,13 @@ public class PlayerController : MonoBehaviour
     [Header("Combat")] 
     [SerializeField] private bool debug;
     [SerializeField] private Transform aimingDirection;
-    [SerializeField] private float lightAttackDamage = 10f;
-    [SerializeField] private float lightAttackCost = 10f;
-    [SerializeField] private float heavyAttackDamage = 35f;
-    [SerializeField] private float heavyAttackCost = 50f;
+    [SerializeField] private int attackMinDamage = 10;
+    [SerializeField] private int attackMaxDamage = 30;
+    [SerializeField] private float attackCost = 10f;
+
     [SerializeField] private Transform castPoint;
     public bool inCombat;
-    private float damageToDeal;
+    private int damageToDeal;
     private float staminaToDecrease;
     private bool beenHit;
     [Header("Player HUD")] 
@@ -71,6 +72,7 @@ public class PlayerController : MonoBehaviour
         trail = GetComponent<TrailRenderer>();
         levelManager = FindObjectOfType<LevelManager>();
         input = GetComponent<PlayerInput>();
+        floatingText = GetComponent<DamageText>();
         currentHealth = MaxHealth;
         currentStamina = MaxStamina;
     }
@@ -160,16 +162,16 @@ public class PlayerController : MonoBehaviour
     public void OnLight(InputAction.CallbackContext context)
     {
         animator.SetTrigger("LightAttack");
-        damageToDeal = lightAttackDamage;
-        staminaToDecrease = lightAttackCost;
+        damageToDeal = Random.Range(attackMinDamage, attackMaxDamage);
+        staminaToDecrease = attackCost;
 
     }
     
     public void OnHeavy(InputAction.CallbackContext context)
     {
-        animator.SetTrigger("HeavyAttack");
-        damageToDeal = heavyAttackDamage;
-        staminaToDecrease = heavyAttackCost;
+        //animator.SetTrigger("HeavyAttack");
+       // damageToDeal = heavyAttackDamage;
+        //staminaToDecrease = heavyAttackCost;
     }
     
     public void OnDash(InputAction.CallbackContext context)
@@ -264,7 +266,6 @@ public class PlayerController : MonoBehaviour
     
     private IEnumerator Attack()
     {
-
             if (currentStamina >= staminaToDecrease && damageToDeal != 0f)
             {
                 UpdateStamina(-staminaToDecrease);
@@ -272,12 +273,13 @@ public class PlayerController : MonoBehaviour
                 {
                     inCombat = true;
                     combat.LineOfSight().gameObject.GetComponent<EnemyController>().UpdateHealth(-damageToDeal);
+                    StartCoroutine(floatingText.DisplayFloatingText(combat.LineOfSight().transform.localPosition, damageToDeal.ToString()));
                     yield return new WaitForSeconds(0.1f);
                     damageToDeal = 0;
                 }
             }
     }
-
+    
     public void showDamageOnHUD()
     {
         var color = gotHit.GetComponent<Image>().color;

@@ -220,4 +220,4 @@ MonoBehaviour:
   movingRight: 0
   target: {fileID: 0}
   castPoint: {fileID: 7983049053945511738}
-  isAttacking: 0
+  attackDamage: 25
