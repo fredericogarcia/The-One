@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private TrailRenderer trail;
     private LevelManager levelManager;
+    private PlayerInput input;
     [SerializeField] private ParticleSystem dust;
     [SerializeField] private LOSCombat combat;
     [Header("Player Movement")]
@@ -67,6 +68,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         trail = GetComponent<TrailRenderer>();
         levelManager = FindObjectOfType<LevelManager>();
+        input = GetComponent<PlayerInput>();
         currentHealth = MaxHealth;
         currentStamina = MaxStamina;
     }
@@ -328,12 +330,17 @@ public class PlayerController : MonoBehaviour
     {
         animator.SetBool("IsDead", isDead);
         dust.Stop();
-        PlayerInput input = GetComponent<PlayerInput>();
-        input.actions.Disable();
+        DisablePlayerInput();
         yield return new WaitForSeconds(2.5f);
         levelManager.LoadGameOver();
     }
+    
+    private void DisablePlayerInput()
+    {
+        input.actions.Disable();
+    }
 }
+
 
 
 // maybe add a can move shit? to force player to stop when dead
