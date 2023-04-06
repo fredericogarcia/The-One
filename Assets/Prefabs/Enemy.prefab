@@ -207,8 +207,8 @@ MonoBehaviour:
   detectionLayer:
     serializedVersion: 2
     m_Bits: 64
-  detectionRadius: 1
-  chaseRange: 1
+  detectionRadius: 1.25
+  chaseRange: 2
   attackRange: 0.5
   distanceToPlayer: 0
   debug: 0

@@ -62,7 +62,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Image staminaBar;
     [SerializeField] private GameObject gotHit;
     [SerializeField] private GameObject drinkHUD;
+    [SerializeField] private GameObject drinkText;
     [SerializeField] private GameObject chocHUD;
+    [SerializeField] private GameObject chocText;
+    [SerializeField] private GameObject staminaCheckWarningText;
+
     
     private void Awake()
     {
@@ -132,38 +136,41 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (currentStamina >= jumpStaminaCost)
-        {
-            if (context.performed)
+   
+            if (StaminaCheck())
             {
-                canDash = false;
-                UpdateStamina(-jumpStaminaCost);
-                if (coyoteTimeCounter >= 0f && jumpBufferTimeCounter >= 0f)
+                if (context.performed)
                 {
-                    isJumping = true;
-                    rb.velocity = new Vector2(playerInput.x, jumpHeight);
+                    UpdateStamina(-jumpStaminaCost);
+                    if (coyoteTimeCounter >= 0f && jumpBufferTimeCounter >= 0f)
+                    {
+                        isJumping = true;
+                        rb.velocity = new Vector2(playerInput.x, jumpHeight);
+                    }
+                }
+                else
+                {
+                    isJumping = false;
+                }
+
+                if (context.canceled && rb.velocity.y > 0)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x + 0.1f, rb.velocity.y * 0.5f);
+                    coyoteTimeCounter = 0f;
+                    jumpBufferTimeCounter = 0f;
                 }
             }
-            else
-            {
-                isJumping = false;
-            }
-
-            if (context.canceled && rb.velocity.y > 0)
-            {
-                canDash = true;
-                rb.velocity = new Vector2(rb.velocity.x + 0.1f, rb.velocity.y * 0.5f);
-                coyoteTimeCounter = 0f;
-                jumpBufferTimeCounter = 0f;
-            }
-        }
     }
 
     public void OnLight(InputAction.CallbackContext context)
     {
-        animator.SetTrigger("LightAttack");
+
         damageToDeal = Random.Range(attackMinDamage, attackMaxDamage);
         staminaToDecrease = attackCost;
+        if (StaminaCheck() && damageToDeal != 0f)
+        {
+            animator.SetTrigger("LightAttack");
+        }
 
     }
     
@@ -176,24 +183,22 @@ public class PlayerController : MonoBehaviour
     
     public void OnDash(InputAction.CallbackContext context)
     {
-        if (canDash) StartCoroutine(Dash());
+        if (StaminaCheck()) StartCoroutine(Dash());
     }
 
     private IEnumerator Dash()
     {
         
-        if (isMoving && currentStamina >= dashStaminaCost && !isJumping)
+        if (isMoving && canDash)
         {
             animator.SetTrigger("IsDashing");
-            UpdateStamina(-dashStaminaCost);
-            canDash = false;
             isDashing = true;
+            canDash = false;
+            UpdateStamina(-dashStaminaCost);
             float originalGravity = rb.gravityScale;
             rb.gravityScale = 0f;
             rb.velocity = new Vector2(playerInput.x * dashingPower, 0f);
-            //trail.emitting = true;
             yield return new WaitForSeconds(dashingTime);
-            //trail.emitting = false;
             rb.gravityScale = originalGravity;
             isDashing = false;
             yield return new WaitForSeconds(dashingCoolDown);
@@ -237,6 +242,7 @@ public class PlayerController : MonoBehaviour
     public IEnumerator StaminaOvertime(int amountToIncrease, float interval)
     {
         drinkHUD.SetActive(true);
+        drinkText.SetActive(true);
         yield return new WaitForSeconds(2f);
         for (int i = 0; i < amountToIncrease; i++)
         {
@@ -244,18 +250,21 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(interval);
         }
         drinkHUD.SetActive(false);
+        drinkText.SetActive(false);
 
     }
     
     public IEnumerator HealthOvertime(int amountToIncrease, float interval)
     {
         chocHUD.SetActive(true);
+        chocText.SetActive(true);
         for (int i = 0; i < amountToIncrease; i++)
         {
             UpdateHealth(1f);
             yield return new WaitForSeconds(interval);
         }
         chocHUD.SetActive(false);
+        chocText.SetActive(false);
     }
 
     private IEnumerator resetCombat()
@@ -266,18 +275,15 @@ public class PlayerController : MonoBehaviour
     
     private IEnumerator Attack()
     {
-            if (currentStamina >= staminaToDecrease && damageToDeal != 0f)
-            {
-                UpdateStamina(-staminaToDecrease);
-                if (combat.LineOfSight())
-                {
-                    inCombat = true;
-                    combat.LineOfSight().gameObject.GetComponent<EnemyController>().UpdateHealth(-damageToDeal);
-                    StartCoroutine(floatingText.DisplayFloatingText(combat.LineOfSight().transform.localPosition, damageToDeal.ToString()));
-                    yield return new WaitForSeconds(0.1f);
-                    damageToDeal = 0;
-                }
-            }
+        UpdateStamina(-staminaToDecrease);
+        if (combat.LineOfSight())
+        {
+            inCombat = true;
+            combat.LineOfSight().gameObject.GetComponent<EnemyController>().UpdateHealth(-damageToDeal);
+            StartCoroutine(floatingText.DisplayFloatingText(combat.LineOfSight().transform.localPosition, damageToDeal.ToString()));
+            yield return new WaitForSeconds(0.1f);
+            damageToDeal = 0;
+        }
     }
     
     public void showDamageOnHUD()
@@ -329,7 +335,28 @@ public class PlayerController : MonoBehaviour
         if (col.gameObject.CompareTag("Enemy")) StartCoroutine(resetCombat());
     }
 
+    private bool StaminaCheck()
+    {
+        if (currentStamina >= staminaToDecrease)
+        {
+            staminaCheckWarningText.SetActive(false);
+            return true;
+        }
+        else
+        {
+            staminaCheckWarningText.SetActive(true);
+            return false;
+        }
+    }
 
+    private IEnumerator StaminaCheckWarningText()
+    {
+        yield return new WaitForSeconds(0.5f);
+        
+        yield return new WaitForSeconds(2f);
+        
+    }
+    
     private IEnumerator Death()
     {
         animator.SetBool("IsDead", isDead);

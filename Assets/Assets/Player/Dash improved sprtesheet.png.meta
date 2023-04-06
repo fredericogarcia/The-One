@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 739bf4cdc1dc4d044bf149a8db83c891
+guid: 558147896512fb245a86f970f0a9698b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -155,7 +155,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Dash_Spritesheet_0
+      name: Dash improved sprtesheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -169,14 +169,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2eb9caa6d440fae4ba1ba227b9a20a5f
-      internalID: 1995423995
+      spriteID: 8c1428aec1a464040b5973f53d0af47a
+      internalID: 638537687
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dash_Spritesheet_1
+      name: Dash improved sprtesheet_1
       rect:
         serializedVersion: 2
         x: 32
@@ -190,14 +190,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a78b0ba11e315db4eb1c429d41317385
-      internalID: 639306593
+      spriteID: a313ebc38844c6a4ca218433788c11f2
+      internalID: -462786943
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dash_Spritesheet_2
+      name: Dash improved sprtesheet_2
       rect:
         serializedVersion: 2
         x: 64
@@ -211,14 +211,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7e3ed054240e2b43b42a7c6850a15b8
-      internalID: 1498716173
+      spriteID: e7bf0f922513f3a4aab977be866d8d1a
+      internalID: 734345182
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dash_Spritesheet_3
+      name: Dash improved sprtesheet_3
       rect:
         serializedVersion: 2
         x: 96
@@ -232,14 +232,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 85bc9673a5d6d4f428a7c2a3d61f63d8
-      internalID: -1477119051
+      spriteID: 6a7504947392be4499ccd3e8b93b46af
+      internalID: 243810167
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dash_Spritesheet_4
+      name: Dash improved sprtesheet_4
       rect:
         serializedVersion: 2
         x: 128
@@ -253,50 +253,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 51d90e620ef0c864fa40517ee1d14e28
-      internalID: -513602956
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dash_Spritesheet_5
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: eb3b28378d611aa488465a823c403902
-      internalID: -910029867
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dash_Spritesheet_6
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e4e8f51d25a7577428323ffe62e5918d
-      internalID: -1199610120
+      spriteID: 28fa1db7545cdb04b9b4263dfae971d1
+      internalID: -1236529657
       vertices: []
       indices: 
       edges: []
@@ -312,13 +270,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Dash_Spritesheet_4: -513602956
-      Dash_Spritesheet_5: -910029867
-      Dash_Spritesheet_0: 1995423995
-      Dash_Spritesheet_1: 639306593
-      Dash_Spritesheet_3: -1477119051
-      Dash_Spritesheet_2: 1498716173
-      Dash_Spritesheet_6: -1199610120
+      Dash improved sprtesheet_1: -462786943
+      Dash improved sprtesheet_0: 638537687
+      Dash improved sprtesheet_4: -1236529657
+      Dash improved sprtesheet_3: 243810167
+      Dash improved sprtesheet_2: 734345182
   spritePackingTag: 
   pSDRemoveMatte: 0
   userData: 

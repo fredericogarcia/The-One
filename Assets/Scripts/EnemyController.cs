@@ -76,7 +76,7 @@ public class EnemyController : MonoBehaviour
             }
             case State.Attacking:
             {
-                if (distanceToPlayer > attackRange) state = State.ChasingPlayer;
+                if (distanceToPlayer > attackRange) state = State.Patrol;
                 canMove = false;
                 animator.SetTrigger("Attack");
                 break;
@@ -170,11 +170,11 @@ public class EnemyController : MonoBehaviour
         if (distanceToPlayer <= 0.2f) state = State.Patrol;
         if (combat.LineOfSight())
         {
-            yield return new WaitForSeconds(0.45f);
+            yield return new WaitForSeconds(0.1f);
             player.showDamageOnHUD();
             player.UpdateHealth(-attackDamage);
         }
-        yield return new WaitForSeconds(0.55f);
+        yield return new WaitForSeconds(0.6f);
         canMove = true;
     }
     
@@ -192,6 +192,10 @@ public class EnemyController : MonoBehaviour
         {
             Gizmos.color = Color.red; 
             Gizmos.DrawWireSphere(transform.position, detectionRadius);
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, chaseRange);
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(transform.position, attackRange);
         }
     }
 }
