@@ -9,12 +9,11 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
-    private TrailRenderer trail;
     private LevelManager levelManager;
     private PlayerInput input;
     private DamageText floatingText;
     [SerializeField] private ParticleSystem dust;
-    [SerializeField] private LOSCombat combat;
+    [SerializeField] private LosCombat combat;
     [Header("Player Movement")]
     [SerializeField] private float movementSpeed = 1.5f;
     [SerializeField] private float jumpHeight = 3.75f;
@@ -66,14 +65,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject chocHUD;
     [SerializeField] private GameObject chocText;
     [SerializeField] private GameObject staminaCheckWarningText;
-
     
+    private static readonly int IsWalking = Animator.StringToHash("IsWalking");
+    private static readonly int LightAttack = Animator.StringToHash("LightAttack");
+    private static readonly int IsDashing = Animator.StringToHash("IsDashing");
+    private static readonly int IsDead = Animator.StringToHash("IsDead");
+
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        trail = GetComponent<TrailRenderer>();
         levelManager = FindObjectOfType<LevelManager>();
         input = GetComponent<PlayerInput>();
         floatingText = GetComponent<DamageText>();
@@ -131,7 +134,7 @@ public class PlayerController : MonoBehaviour
     {
         playerInput = context.ReadValue<Vector2>();
         isMoving = playerInput != Vector2.zero;
-        animator.SetBool("IsWalking", isMoving);
+        animator.SetBool(IsWalking, isMoving);
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -169,7 +172,7 @@ public class PlayerController : MonoBehaviour
         staminaToDecrease = attackCost;
         if (StaminaCheck() && damageToDeal != 0f)
         {
-            animator.SetTrigger("LightAttack");
+            animator.SetTrigger(LightAttack);
         }
 
     }
@@ -191,7 +194,7 @@ public class PlayerController : MonoBehaviour
         
         if (isMoving && canDash)
         {
-            animator.SetTrigger("IsDashing");
+            animator.SetTrigger(IsDashing);
             isDashing = true;
             canDash = false;
             UpdateStamina(-dashStaminaCost);
@@ -203,7 +206,7 @@ public class PlayerController : MonoBehaviour
             isDashing = false;
             yield return new WaitForSeconds(dashingCoolDown);
             canDash = true;
-            animator.ResetTrigger("IsDashing");
+            animator.ResetTrigger(IsDashing);
         }
     }
    
@@ -267,7 +270,7 @@ public class PlayerController : MonoBehaviour
         chocText.SetActive(false);
     }
 
-    private IEnumerator resetCombat()
+    private IEnumerator ResetCombat()
     {
         yield return new WaitForSeconds(2f);
         inCombat = false;
@@ -331,8 +334,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Obstacle")) StartCoroutine(resetCombat());
-        if (col.gameObject.CompareTag("Enemy")) StartCoroutine(resetCombat());
+        if (col.gameObject.CompareTag("Obstacle")) StartCoroutine(ResetCombat());
+        if (col.gameObject.CompareTag("Enemy")) StartCoroutine(ResetCombat());
     }
 
     private bool StaminaCheck()
@@ -348,18 +351,9 @@ public class PlayerController : MonoBehaviour
             return false;
         }
     }
-
-    private IEnumerator StaminaCheckWarningText()
-    {
-        yield return new WaitForSeconds(0.5f);
-        
-        yield return new WaitForSeconds(2f);
-        
-    }
-    
     private IEnumerator Death()
     {
-        animator.SetBool("IsDead", isDead);
+        animator.SetBool(IsDead, isDead);
         dust.Stop();
         DisablePlayerInput();
         yield return new WaitForSeconds(2.5f);

@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-
-
-public class LOSCombat : MonoBehaviour
+public class LosCombat : MonoBehaviour
 {
      [SerializeField] private float distance;
      public Collider2D LineOfSight()

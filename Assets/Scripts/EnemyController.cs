@@ -8,7 +8,7 @@ public class EnemyController : MonoBehaviour
     private PlayerController player;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
-    private LOSCombat combat;
+    private LosCombat combat;
     [Header("AI Settings")] 
     [SerializeField] private State state;
     [SerializeField] private LayerMask detectionLayer;
@@ -37,15 +37,19 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private Transform castPoint;
     [SerializeField] private int attackDamage;
-
     
+    private static readonly int IsAttacking = Animator.StringToHash("Attack");
+    private static readonly int IsWalking = Animator.StringToHash("IsWalking");
+    private static readonly int IsDead = Animator.StringToHash("IsDead");
+
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         player = FindObjectOfType<PlayerController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        combat = GetComponentInChildren<LOSCombat>();
+        combat = GetComponentInChildren<LosCombat>();
         currentHealth = MaxHealth;
         originalPosition = transform.localPosition;
         state = State.Patrol;
@@ -78,7 +82,7 @@ public class EnemyController : MonoBehaviour
             {
                 if (distanceToPlayer > attackRange) state = State.Patrol;
                 canMove = false;
-                animator.SetTrigger("Attack");
+                animator.SetTrigger(IsAttacking);
                 break;
             }
             case State.Dead:
@@ -99,7 +103,7 @@ public class EnemyController : MonoBehaviour
     
     private void FlipCharacter()
     {
-        animator.SetBool("IsWalking", true);
+        animator.SetBool(IsWalking, true);
         switch (movingRight)
         {
             case true:
@@ -181,7 +185,7 @@ public class EnemyController : MonoBehaviour
     private IEnumerator Death()
     {
         player.inCombat = false;
-        animator.SetBool("IsDead", true);
+        animator.SetBool(IsDead, true);
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
