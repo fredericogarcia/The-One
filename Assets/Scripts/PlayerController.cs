@@ -50,7 +50,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int attackMinDamage = 10;
     [SerializeField] private int attackMaxDamage = 30;
     [SerializeField] private float attackCost = 10f;
-
     [SerializeField] private Transform castPoint;
     public bool inCombat;
     private int damageToDeal;
@@ -71,6 +70,7 @@ public class PlayerController : MonoBehaviour
     private static readonly int IsDashing = Animator.StringToHash("IsDashing");
     private static readonly int IsDead = Animator.StringToHash("IsDead");
 
+    public float enemyCount;
 
     private void Awake()
     {
@@ -86,6 +86,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (enemyCount == 0) StartCoroutine(Win());
+        
         if (isDashing) return;
         if (isJumping) dust.Play();
         FlipCharacter();
@@ -167,21 +169,9 @@ public class PlayerController : MonoBehaviour
 
     public void OnLight(InputAction.CallbackContext context)
     {
-
         damageToDeal = Random.Range(attackMinDamage, attackMaxDamage);
         staminaToDecrease = attackCost;
-        if (StaminaCheck() && damageToDeal != 0f)
-        {
-            animator.SetTrigger(LightAttack);
-        }
-
-    }
-    
-    public void OnHeavy(InputAction.CallbackContext context)
-    {
-        //animator.SetTrigger("HeavyAttack");
-       // damageToDeal = heavyAttackDamage;
-        //staminaToDecrease = heavyAttackCost;
+        if (StaminaCheck() && damageToDeal != 0f) animator.SetTrigger(LightAttack);
     }
     
     public void OnDash(InputAction.CallbackContext context)
@@ -287,6 +277,7 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             damageToDeal = 0;
         }
+        yield return new WaitForSeconds(0.45f);
     }
     
     public void showDamageOnHUD()

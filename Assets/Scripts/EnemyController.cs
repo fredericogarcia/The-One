@@ -9,6 +9,7 @@ public class EnemyController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private LosCombat combat;
+    
     [Header("AI Settings")] 
     [SerializeField] private State state;
     [SerializeField] private LayerMask detectionLayer;
@@ -38,6 +39,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Transform castPoint;
     [SerializeField] private int attackDamage;
     
+    
     private static readonly int IsAttacking = Animator.StringToHash("Attack");
     private static readonly int IsWalking = Animator.StringToHash("IsWalking");
     private static readonly int IsDead = Animator.StringToHash("IsDead");
@@ -53,6 +55,7 @@ public class EnemyController : MonoBehaviour
         currentHealth = MaxHealth;
         originalPosition = transform.localPosition;
         state = State.Patrol;
+        player.enemyCount++;
     }
     
     private void Update()
@@ -169,6 +172,8 @@ public class EnemyController : MonoBehaviour
         if (currentHealth <= 0) state = State.Dead;
     }
     
+    public void UpdateEnemyCount() => player.enemyCount--;
+    
     public IEnumerator Attack()
     {
         if (distanceToPlayer <= 0.2f) state = State.Patrol;
@@ -187,6 +192,7 @@ public class EnemyController : MonoBehaviour
         player.inCombat = false;
         animator.SetBool(IsDead, true);
         yield return new WaitForSeconds(1f);
+        player.enemyCount--;
         Destroy(gameObject);
     }
     // DEBUG ONLY
