@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    public float enemyCount;
     [Header("Components")]
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
@@ -64,13 +65,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject chocHUD;
     [SerializeField] private GameObject chocText;
     [SerializeField] private GameObject staminaCheckWarningText;
+    [Header("Background changer")]
+    [SerializeField] private GameObject dayBackground;
+    [SerializeField] private GameObject dayBackgroundExtension;
+    [SerializeField] private GameObject nightBackground;
+    [SerializeField] private GameObject nightBackgroundExtension;
     
     private static readonly int IsWalking = Animator.StringToHash("IsWalking");
     private static readonly int LightAttack = Animator.StringToHash("LightAttack");
     private static readonly int IsDashing = Animator.StringToHash("IsDashing");
     private static readonly int IsDead = Animator.StringToHash("IsDead");
-
-    public float enemyCount;
 
     private void Awake()
     {
@@ -312,7 +316,21 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Obstacle")) ObstacleDamage();
+        if (col.gameObject.CompareTag("BackgroundChanger")) StartCoroutine(ChangeBackground());
     }
+
+    private Color dayOpacity;
+    private Color nightOpacity;
+    
+    private IEnumerator ChangeBackground()
+    {
+        nightBackground.SetActive(true);
+        nightBackgroundExtension.SetActive(true);
+        yield return new WaitForSeconds(2.5f);
+        dayBackgroundExtension.SetActive(false);
+        dayBackground.SetActive(false);
+    }
+    
 
     private void OnTriggerStay2D(Collider2D col)
     {
@@ -336,11 +354,8 @@ public class PlayerController : MonoBehaviour
             staminaCheckWarningText.SetActive(false);
             return true;
         }
-        else
-        {
-            staminaCheckWarningText.SetActive(true);
-            return false;
-        }
+        staminaCheckWarningText.SetActive(true);
+        return false;
     }
     private IEnumerator Death()
     {
