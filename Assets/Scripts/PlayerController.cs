@@ -80,6 +80,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject nightBackgroundExtension;
     private Color dayOpacity;
     private Color nightOpacity;
+    private bool attacking;
 
 
     //animations
@@ -186,9 +187,13 @@ public class PlayerController : MonoBehaviour
 
     public void OnLight(InputAction.CallbackContext context)
     {
+        if (attacking) return;
         damageToDeal = Random.Range(attackMinDamage, attackMaxDamage);
         staminaToDecrease = attackCost;
-        if (StaminaCheck() && damageToDeal != 0f) animator.SetTrigger(LightAttack);
+        if (StaminaCheck() && damageToDeal != 0f) {
+            attacking = true;
+            animator.SetTrigger(LightAttack);
+        }
     }
     
     public void OnDash(InputAction.CallbackContext context)
@@ -325,7 +330,8 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             damageToDeal = 0;
         }
-        yield return new WaitForSeconds(0.45f);
+        yield return new WaitForSeconds(0.25f);
+        attacking = false;
     }
     
     public void showDamageOnHUD()
@@ -400,10 +406,10 @@ public class PlayerController : MonoBehaviour
    
     private IEnumerator Death()
     {
-        animator.SetBool(IsDead, isDead);
         dust.Stop();
         DisablePlayerInput();
-        yield return new WaitForSeconds(2.5f);
+        animator.SetBool(IsDead, isDead);
+        yield return new WaitForSeconds(2f);
         levelManager.LoadGameOver();
     }
     
