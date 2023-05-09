@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class PlayerController : MonoBehaviour
     private LevelManager levelManager;
     private PlayerInput input;
     private DamageText floatingText;
+    private EventSystem eSystem;
+
     [SerializeField] private ParticleSystem dust;
     [SerializeField] private LosCombat combat;
     [Header("Player Movement")]
@@ -65,12 +68,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject chocHUD;
     [SerializeField] private GameObject chocText;
     [SerializeField] private GameObject staminaCheckWarningText;
+    private bool isGamePaused;
+    [SerializeField] private GameObject pauseButton;
+    [SerializeField] private GameObject playerHUD;
+    [SerializeField] private GameObject pauseScreen;
+
     [Header("Background changer")]
     [SerializeField] private GameObject dayBackground;
     [SerializeField] private GameObject dayBackgroundExtension;
     [SerializeField] private GameObject nightBackground;
     [SerializeField] private GameObject nightBackgroundExtension;
-    
+    private Color dayOpacity;
+    private Color nightOpacity;
+
+
+    //animations
     private static readonly int IsWalking = Animator.StringToHash("IsWalking");
     private static readonly int LightAttack = Animator.StringToHash("LightAttack");
     private static readonly int IsDashing = Animator.StringToHash("IsDashing");
@@ -84,6 +96,7 @@ public class PlayerController : MonoBehaviour
         levelManager = FindObjectOfType<LevelManager>();
         input = GetComponent<PlayerInput>();
         floatingText = GetComponent<DamageText>();
+        eSystem = EventSystem.current;
         currentHealth = MaxHealth;
         currentStamina = MaxStamina;
     }
@@ -127,7 +140,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Win()
     {
         yield return new WaitForSeconds(2f);
-        levelManager.LoadMainMenu();
+        levelManager.LoadVictory();
     }
     
     private void FixedUpdate()
@@ -181,6 +194,37 @@ public class PlayerController : MonoBehaviour
     public void OnDash(InputAction.CallbackContext context)
     {
         if (StaminaCheck()) StartCoroutine(Dash());
+    }
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        // If the game is not already paused, pause the game by disabling the player HUD and showing the pause screen.
+        if (!isGamePaused)
+        {
+            eSystem.SetSelectedGameObject(null);
+            eSystem.SetSelectedGameObject(pauseButton);
+            isGamePaused = true;
+            playerHUD.SetActive(!isGamePaused);
+            pauseScreen.SetActive(isGamePaused);
+            Time.timeScale = 0f;
+        }
+        // If the game is already paused, continue the game by enabling the player HUD and hiding the pause screen.
+        else
+        {
+            Continue();
+        }
+    }
+
+    public void Continue()
+    {
+    // This function continues the game by enabling the player HUD and hiding the pause screen.
+        if (isGamePaused)
+        {
+            isGamePaused = false;
+            playerHUD.SetActive(!isGamePaused);
+            pauseScreen.SetActive(isGamePaused);
+            Time.timeScale = 1f;
+        }
     }
 
     private IEnumerator Dash()
@@ -319,9 +363,6 @@ public class PlayerController : MonoBehaviour
         if (col.gameObject.CompareTag("BackgroundChanger")) StartCoroutine(ChangeBackground());
     }
 
-    private Color dayOpacity;
-    private Color nightOpacity;
-    
     private IEnumerator ChangeBackground()
     {
         nightBackground.SetActive(true);
@@ -331,7 +372,6 @@ public class PlayerController : MonoBehaviour
         dayBackground.SetActive(false);
     }
     
-
     private void OnTriggerStay2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Obstacle"))
@@ -357,6 +397,7 @@ public class PlayerController : MonoBehaviour
         staminaCheckWarningText.SetActive(true);
         return false;
     }
+   
     private IEnumerator Death()
     {
         animator.SetBool(IsDead, isDead);
@@ -370,4 +411,5 @@ public class PlayerController : MonoBehaviour
     {
         input.actions.Disable();
     }
+
 }

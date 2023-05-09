@@ -9,21 +9,24 @@ public class LevelManager : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("Level_0");
     }
-
     // Load the main menu scene
     public void LoadMainMenu()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
     }
-
     // Load the game over scene
     public void LoadGameOver()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("GameOver");
     }
-    
+    // Load the victory scene
+    public void LoadVictory()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Victory");
+    }
     // Quit the application
     public void Quit()
     {
