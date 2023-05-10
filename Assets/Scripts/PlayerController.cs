@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float coyoteTimeCounter;
     [SerializeField] private float jumpBufferTimeCounter;
     [SerializeField] private int jumpStaminaCost = 15;
+    private bool canMove;
     [Header("Dash")] 
     [SerializeField] private bool canDash = true;
     [SerializeField] private bool isDashing;
@@ -138,7 +139,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator Win()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f);
         levelManager.LoadVictory();
     }
     
@@ -150,9 +151,12 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        playerInput = context.ReadValue<Vector2>();
-        isMoving = playerInput != Vector2.zero;
-        animator.SetBool(IsWalking, isMoving);
+        if (canMove)
+        {
+            playerInput = context.ReadValue<Vector2>();
+            isMoving = playerInput != Vector2.zero;
+            animator.SetBool(IsWalking, isMoving);
+        }
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -211,11 +215,13 @@ public class PlayerController : MonoBehaviour
             playerHUD.SetActive(!isGamePaused);
             pauseScreen.SetActive(isGamePaused);
             Time.timeScale = 0f;
+            canMove = false;
         }
         // If the game is already paused, continue the game by enabling the player HUD and hiding the pause screen.
         else
         {
             Continue();
+            canMove = true;
         }
     }
 
@@ -335,7 +341,7 @@ public class PlayerController : MonoBehaviour
     public void showDamageOnHUD()
     {
         var color = gotHit.GetComponent<Image>().color;
-        color.a = 0.75f;
+        color.a = 1f;
         gotHit.GetComponent<Image>().color = color;
         beenHit = true;
     }
@@ -357,7 +363,7 @@ public class PlayerController : MonoBehaviour
     private void ObstacleDamage()
     {
         inCombat = true;
-        UpdateHealth(-2.5f);
+        UpdateHealth(-5f);
         showDamageOnHUD();
     }
     
@@ -381,7 +387,7 @@ public class PlayerController : MonoBehaviour
         if (col.gameObject.CompareTag("Obstacle"))
         {
             inCombat = true;
-            UpdateHealth(-0.1f);
+            UpdateHealth(-0.05f);
         }
     }
 
@@ -414,6 +420,12 @@ public class PlayerController : MonoBehaviour
     private void DisablePlayerInput()
     {
         input.actions.Disable();
+        canMove = false;
+    }
+
+    private void EnablePlayerInput()
+    {
+        input.actions.Enable();
     }
 
 }

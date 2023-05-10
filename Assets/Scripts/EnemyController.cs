@@ -195,7 +195,7 @@ public class EnemyController : MonoBehaviour
     {
         player.inCombat = false;
         animator.SetBool(IsDead, true);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.35f);
         Destroy(gameObject);
     }
     // DEBUG ONLY
