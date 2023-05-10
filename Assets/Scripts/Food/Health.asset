@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ca52254d59b7dc4eb5bc80844c929c8, type: 3}
   m_Name: Health
   m_EditorClassIdentifier: 
-  amountToHeal: 30
-  interval: 0.25
+  amountToHeal: 60
+  interval: 0.2

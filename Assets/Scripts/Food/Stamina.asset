@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0886a167670a45c7a0963eee7ea53750, type: 3}
   m_Name: Stamina
   m_EditorClassIdentifier: 
-  amountToIncreaseStamina: 30
+  amountToIncreaseStamina: 60
   interval: 0.025

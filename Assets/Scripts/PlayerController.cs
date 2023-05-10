@@ -33,7 +33,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float coyoteTimeCounter;
     [SerializeField] private float jumpBufferTimeCounter;
     [SerializeField] private int jumpStaminaCost = 15;
-    private bool canMove;
+    [SerializeField] private bool canMove = true;
+    [SerializeField] private bool canJump = true;
+
     [Header("Dash")] 
     [SerializeField] private bool canDash = true;
     [SerializeField] private bool isDashing;
@@ -104,7 +106,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         if (enemyCount == 0) StartCoroutine(Win());
-        
+        if (isDead) StartCoroutine(Death());
         if (isDashing) return;
         if (isJumping) dust.Play();
         FlipCharacter();
@@ -122,17 +124,12 @@ public class PlayerController : MonoBehaviour
             coyoteTimeCounter -= Time.deltaTime;
             jumpBufferTimeCounter -= Time.deltaTime;
         }
-
-        if (isDead)
-        {
-            StartCoroutine(Death());
-        } 
         
         UpdateStamina(10f * Time.deltaTime);
         
-        if (!inCombat) UpdateHealth(10f * Time.deltaTime);
-
         StartCoroutine(resetShowDamageOnHUD());
+
+        if (!inCombat) UpdateHealth(10f * Time.deltaTime);
 
         if (debug) combat.LineOfSight();
     }
@@ -151,8 +148,10 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        
         if (canMove)
         {
+            attacking = false;
             playerInput = context.ReadValue<Vector2>();
             isMoving = playerInput != Vector2.zero;
             animator.SetBool(IsWalking, isMoving);
@@ -161,8 +160,9 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-   
-            if (StaminaCheck())
+        if (canJump)
+        {
+            if (StaminaCheck() && isGrounded)
             {
                 if (context.performed)
                 {
@@ -185,6 +185,7 @@ public class PlayerController : MonoBehaviour
                     jumpBufferTimeCounter = 0f;
                 }
             }
+        }
     }
 
     public void OnLight(InputAction.CallbackContext context)
@@ -201,6 +202,7 @@ public class PlayerController : MonoBehaviour
     
     public void OnDash(InputAction.CallbackContext context)
     {
+        attacking = false;
         if (StaminaCheck()) StartCoroutine(Dash());
     }
 
@@ -216,12 +218,13 @@ public class PlayerController : MonoBehaviour
             pauseScreen.SetActive(isGamePaused);
             Time.timeScale = 0f;
             canMove = false;
+            canJump = false;
         }
         // If the game is already paused, continue the game by enabling the player HUD and hiding the pause screen.
         else
         {
             Continue();
-            canMove = true;
+            
         }
     }
 
@@ -234,6 +237,8 @@ public class PlayerController : MonoBehaviour
             playerHUD.SetActive(!isGamePaused);
             pauseScreen.SetActive(isGamePaused);
             Time.timeScale = 1f;
+            canMove = true;
+            canJump = true;
         }
     }
 
@@ -320,19 +325,25 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         inCombat = false;
+        attacking = false;
     }
     
     private IEnumerator Attack()
     {
         UpdateStamina(-staminaToDecrease);
         if (attacking) attacking = false;
-        if (combat.LineOfSight() && combat.LineOfSight().CompareTag("Enemy"))
+        if (combat.LineOfSight())
         {
-            inCombat = true;
-            combat.LineOfSight().gameObject.GetComponent<EnemyController>().UpdateHealth(-damageToDeal);
-            StartCoroutine(floatingText.DisplayFloatingText(combat.LineOfSight().transform.position, damageToDeal.ToString()));
-            yield return new WaitForSeconds(0.1f);
-            damageToDeal = 0;
+            if (combat.LineOfSight().CompareTag("Enemy") &&
+                !combat.LineOfSight().gameObject.GetComponent<EnemyController>().isDead)
+            {
+                StartCoroutine(floatingText.DisplayFloatingText(combat.LineOfSight().transform.position,
+                    damageToDeal.ToString()));
+                inCombat = true;
+                combat.LineOfSight().gameObject.GetComponent<EnemyController>().UpdateHealth(-damageToDeal);
+                yield return new WaitForSeconds(0.25f);
+            }
+            else StartCoroutine(ResetCombat());
         }
         yield return new WaitForSeconds(0.45f);
         attacking = false;

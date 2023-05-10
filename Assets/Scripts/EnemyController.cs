@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -28,6 +29,7 @@ public class EnemyController : MonoBehaviour
     [Header("Health System")] 
     [SerializeField] private float currentHealth;
     private const float MaxHealth = 100f;
+    public bool isDead;
     [Header("Movement")]
     [SerializeField] private Vector2 originalPosition;
     [SerializeField] private float movementSpeed;
@@ -39,7 +41,6 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Transform castPoint;
     [SerializeField] private int attackDamage;
     [SerializeField] private float castPointDistance;
-    
     private static readonly int IsAttacking = Animator.StringToHash("Attack");
     private static readonly int IsWalking = Animator.StringToHash("IsWalking");
     private static readonly int IsDead = Animator.StringToHash("IsDead");
@@ -58,10 +59,17 @@ public class EnemyController : MonoBehaviour
         player.enemyCount++;
     }
     
-    private void Update()
+    private void FixedUpdate()
     {
+        
         FlipCharacter();
-        if (target != null) distanceToPlayer = Vector2.Distance(transform.position, target.position);
+        if (target != null)
+        {
+            distanceToPlayer = Vector2.Distance(transform.position, target.position);
+            if (Math.Abs(target.position.x - transform.position.x) < 0.2f && target.position.y > transform.position.y) canMove = false;
+            else canMove = true;
+            if (!canMove) return;
+        }
         
         switch (state)
         {
@@ -75,6 +83,8 @@ public class EnemyController : MonoBehaviour
             }
             case State.ChasingPlayer:
             {
+
+
                 player.inCombat = true;
                 if (movingRight & transform.localPosition.x > target.position.x) movingRight = false;
                 else if (!movingRight & transform.localPosition.x < target.position.x) movingRight = true;
@@ -167,13 +177,9 @@ public class EnemyController : MonoBehaviour
   
     public void UpdateHealth(float value)
     {
-        if (state == State.Dead) return;
         currentHealth += value;
         if (currentHealth > 100f) currentHealth = MaxHealth;
-        if (currentHealth <= 0) {
-            state = State.Dead;
-            player.enemyCount--;
-        }
+        if (currentHealth <= 0) state = State.Dead;
     }
     
     public void UpdateEnemyCount() => player.enemyCount--;
@@ -193,10 +199,14 @@ public class EnemyController : MonoBehaviour
     
     private IEnumerator Death()
     {
-        player.inCombat = false;
-        animator.SetBool(IsDead, true);
-        yield return new WaitForSeconds(1.35f);
-        Destroy(gameObject);
+        if (!isDead)
+        {
+            player.inCombat = false;
+            animator.SetBool(IsDead, true);
+            yield return new WaitForSeconds(1.35f);
+            isDead = true;
+            Destroy(gameObject);
+        }
     }
     // DEBUG ONLY
     private void OnDrawGizmosSelected()

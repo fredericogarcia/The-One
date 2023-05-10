@@ -442,6 +442,7 @@ MonoBehaviour:
   coyoteTimeCounter: 0
   jumpBufferTimeCounter: 0
   jumpStaminaCost: 7
+  canMove: 1
   canDash: 1
   isDashing: 0
   dashingPower: 3
@@ -451,11 +452,11 @@ MonoBehaviour:
   currentHealth: 0
   currentStamina: 0
   debug: 0
-  aimingDirection: {fileID: 8655468004751343337}
   attackMinDamage: 15
   attackMaxDamage: 30
   attackCost: 12.5
   castPoint: {fileID: 8655468004988624302}
+  attacking: 0
   inCombat: 0
   healthBar: {fileID: 0}
   staminaBar: {fileID: 0}
