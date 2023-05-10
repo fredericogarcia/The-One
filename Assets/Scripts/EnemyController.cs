@@ -66,8 +66,18 @@ public class EnemyController : MonoBehaviour
         if (target != null)
         {
             distanceToPlayer = Vector2.Distance(transform.position, target.position);
-            if (Math.Abs(target.position.x - transform.position.x) < 0.2f && target.position.y > transform.position.y) canMove = false;
+            if (Math.Abs(target.position.x - transform.position.x) < 0.2f && target.position.y > transform.position.y)
+            {
+                canMove = false;
+                
+            }
             else canMove = true;
+
+            if (currentHealth <= 0)
+            {
+                canMove = true;
+                state = State.Dead;
+            }
             if (!canMove) return;
         }
         
@@ -190,7 +200,7 @@ public class EnemyController : MonoBehaviour
         if (combat.LineOfSight())
         {
             yield return new WaitForSeconds(0.1f);
-            player.showDamageOnHUD();
+            StartCoroutine(player.showDamageOnHUD());
             player.UpdateHealth(-attackDamage);
         }
         yield return new WaitForSeconds(0.6f);

@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7983049053945511733}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.05, y: 0, z: 0}
+  m_LocalPosition: {x: -0.133, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed280c3e8fd84164b87302d08d3995a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 2.25
+  distance: 0.75
 --- !u!1 &7983049055789803368
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,8 +214,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.022268932, y: 0.041779064}
-  m_Size: {x: 0.09547424, y: 0.3595291}
+  m_Offset: {x: -0.0019235611, y: 0.046153665}
+  m_Size: {x: 0.19615746, y: 0.35384881}
   m_Direction: 0
 --- !u!114 &4101237301147348112
 MonoBehaviour:
@@ -235,7 +235,7 @@ MonoBehaviour:
     m_Bits: 64
   detectionRadius: 1.25
   chaseRange: 2.5
-  attackRange: 0.2
+  attackRange: 0.25
   distanceToPlayer: 0
   debug: 0
   currentHealth: 0
@@ -248,4 +248,4 @@ MonoBehaviour:
   target: {fileID: 0}
   castPoint: {fileID: 7983049053945511738}
   attackDamage: 10
-  castPointDistance: 0.05
+  castPointDistance: 0.133

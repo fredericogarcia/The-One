@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
     public bool inCombat;
     private int damageToDeal;
     private float staminaToDecrease;
-    private bool beenHit;
+    //private bool beenHit;
     [Header("Player HUD")] 
     [SerializeField] private Image healthBar;
     [SerializeField] private Image staminaBar;
@@ -105,6 +105,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        //StartCoroutine(resetShowDamageOnHUD());
         if (enemyCount == 0) StartCoroutine(Win());
         if (isDead) StartCoroutine(Death());
         if (isDashing) return;
@@ -127,13 +128,13 @@ public class PlayerController : MonoBehaviour
         
         UpdateStamina(10f * Time.deltaTime);
         
-        StartCoroutine(resetShowDamageOnHUD());
+        
 
         if (!inCombat) UpdateHealth(10f * Time.deltaTime);
 
         if (debug) combat.LineOfSight();
     }
-
+    
     private IEnumerator Win()
     {
         yield return new WaitForSeconds(5f);
@@ -144,6 +145,8 @@ public class PlayerController : MonoBehaviour
     {
         if (isDashing) return;
         rb.velocity = new Vector2(playerInput.x * movementSpeed, rb.velocity.y);
+        
+        
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -221,11 +224,7 @@ public class PlayerController : MonoBehaviour
             canJump = false;
         }
         // If the game is already paused, continue the game by enabling the player HUD and hiding the pause screen.
-        else
-        {
-            Continue();
-            
-        }
+        else Continue();
     }
 
     public void Continue()
@@ -250,15 +249,18 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger(IsDashing);
             isDashing = true;
             canDash = false;
+            canJump = false;
             UpdateStamina(-dashStaminaCost);
             float originalGravity = rb.gravityScale;
             rb.gravityScale = 0f;
             rb.velocity = new Vector2(playerInput.x * dashingPower, 0f);
             yield return new WaitForSeconds(dashingTime);
             rb.gravityScale = originalGravity;
+            canJump = true;
             isDashing = false;
             yield return new WaitForSeconds(dashingCoolDown);
             canDash = true;
+            
             animator.ResetTrigger(IsDashing);
         }
     }
@@ -323,9 +325,11 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator ResetCombat()
     {
+        //StartCoroutine(resetShowDamageOnHUD());
         yield return new WaitForSeconds(2f);
         inCombat = false;
         attacking = false;
+        //beenHit = false;
     }
     
     private IEnumerator Attack()
@@ -348,18 +352,25 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.45f);
         attacking = false;
     }
-    
+
+    public IEnumerator showDamageOnHUD()
+    {
+        gotHit.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        gotHit.SetActive(false);
+    }
+    /* breaks when too much damage is taken too fast??
     public void showDamageOnHUD()
     {
-        var color = gotHit.GetComponent<Image>().color;
-        color.a = 1f;
-        gotHit.GetComponent<Image>().color = color;
-        beenHit = true;
+            var color = gotHit.GetComponent<Image>().color;
+            color.a = 0.75f;
+            gotHit.GetComponent<Image>().color = color;
+            beenHit = true;
     }
 
     private IEnumerator resetShowDamageOnHUD()
     {
-        if (beenHit && currentHealth > 40)
+        if (beenHit && currentHealth >= 40)
         {
             var color = gotHit.GetComponent<Image>().color;
             color.a -= 0.01f;
@@ -370,12 +381,13 @@ public class PlayerController : MonoBehaviour
             beenHit = false;
         }
     }
+    */
     
     private void ObstacleDamage()
     {
         inCombat = true;
         UpdateHealth(-5f);
-        showDamageOnHUD();
+        StartCoroutine(showDamageOnHUD());
     }
     
     private void OnTriggerEnter2D(Collider2D col)
@@ -433,10 +445,5 @@ public class PlayerController : MonoBehaviour
         input.actions.Disable();
         canMove = false;
     }
-
-    private void EnablePlayerInput()
-    {
-        input.actions.Enable();
-    }
-
+    
 }
