@@ -167,9 +167,13 @@ public class EnemyController : MonoBehaviour
   
     public void UpdateHealth(float value)
     {
+        if (state == State.Dead) return;
         currentHealth += value;
         if (currentHealth > 100f) currentHealth = MaxHealth;
-        if (currentHealth <= 0) state = State.Dead;
+        if (currentHealth <= 0) {
+            state = State.Dead;
+            player.enemyCount--;
+        }
     }
     
     public void UpdateEnemyCount() => player.enemyCount--;
@@ -192,7 +196,6 @@ public class EnemyController : MonoBehaviour
         player.inCombat = false;
         animator.SetBool(IsDead, true);
         yield return new WaitForSeconds(1f);
-        player.enemyCount--;
         Destroy(gameObject);
     }
     // DEBUG ONLY

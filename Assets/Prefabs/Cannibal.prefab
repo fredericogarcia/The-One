@@ -123,7 +123,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: -833990541, guid: 35588f318d847024eadd82fe3ec0edd5, type: 3}
+  m_Sprite: {fileID: 1884341634, guid: aec8673865aeabf4f994f00d384dab20, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -171,7 +171,7 @@ Animator:
   m_GameObject: {fileID: 7983049055789803368}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 20fadd70ae3685546a71e904534eacb1, type: 2}
+  m_Controller: {fileID: 9100000, guid: 445a84391684fda4f8aba36a28e42db9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -214,8 +214,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0017014345, y: -0.05274427}
-  m_Size: {x: 0.22145066, y: 0.48687273}
+  m_Offset: {x: 0.022268932, y: 0.041779064}
+  m_Size: {x: 0.09547424, y: 0.3595291}
   m_Direction: 0
 --- !u!114 &4101237301147348112
 MonoBehaviour:
@@ -234,16 +234,16 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   detectionRadius: 1.25
-  chaseRange: 2
+  chaseRange: 4
   attackRange: 0.5
   distanceToPlayer: 0
   debug: 0
   currentHealth: 0
   originalPosition: {x: 0, y: 0}
-  movementSpeed: 0.5
+  movementSpeed: 0.75
   patrolDistance: 0.5
   canMove: 1
   movingRight: 0
   target: {fileID: 0}
   castPoint: {fileID: 7983049053945511738}
-  attackDamage: 25
+  attackDamage: 10
