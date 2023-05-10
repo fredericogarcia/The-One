@@ -50,11 +50,11 @@ public class PlayerController : MonoBehaviour
     private bool isDead;
     [Header("Combat")] 
     [SerializeField] private bool debug;
-    [SerializeField] private Transform aimingDirection;
     [SerializeField] private int attackMinDamage = 10;
     [SerializeField] private int attackMaxDamage = 30;
     [SerializeField] private float attackCost = 10f;
     [SerializeField] private Transform castPoint;
+    [SerializeField] private bool attacking;
     public bool inCombat;
     private int damageToDeal;
     private float staminaToDecrease;
@@ -80,8 +80,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject nightBackgroundExtension;
     private Color dayOpacity;
     private Color nightOpacity;
-    private bool attacking;
-
 
     //animations
     private static readonly int IsWalking = Animator.StringToHash("IsWalking");
@@ -188,9 +186,10 @@ public class PlayerController : MonoBehaviour
     public void OnLight(InputAction.CallbackContext context)
     {
         if (attacking) return;
-        damageToDeal = Random.Range(attackMinDamage, attackMaxDamage);
-        staminaToDecrease = attackCost;
-        if (StaminaCheck() && damageToDeal != 0f) {
+        if (StaminaCheck()) {
+            damageToDeal = Random.Range(attackMinDamage, attackMaxDamage);
+            if (damageToDeal == 0) damageToDeal = attackMinDamage;
+            staminaToDecrease = attackCost;
             attacking = true;
             animator.SetTrigger(LightAttack);
         }
@@ -259,14 +258,12 @@ public class PlayerController : MonoBehaviour
         {
             case > 0:
                 spriteRenderer.flipX = false;
-                aimingDirection.localPosition = new Vector3(0.05f,aimingDirection.localPosition.y,aimingDirection.localPosition.z);
-                castPoint.localPosition = new Vector3(0.14f,castPoint.localPosition.y,castPoint.localPosition.z);
+                castPoint.localPosition = new Vector3(0.072f,castPoint.localPosition.y,castPoint.localPosition.z);
                 dust.Play();
                 break;
             case < 0:
                 spriteRenderer.flipX = true;
-                aimingDirection.localPosition = new Vector3(-0.05f, aimingDirection.localPosition.y,aimingDirection.localPosition.z);
-                castPoint.localPosition = new Vector3(-0.14f,castPoint.localPosition.y,castPoint.localPosition.z);
+                castPoint.localPosition = new Vector3(-0.072f,castPoint.localPosition.y,castPoint.localPosition.z);
                 dust.Play();
                 break;
         }
@@ -322,15 +319,16 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Attack()
     {
         UpdateStamina(-staminaToDecrease);
-        if (combat.LineOfSight())
+        if (attacking) attacking = false;
+        if (combat.LineOfSight() && combat.LineOfSight().CompareTag("Enemy"))
         {
             inCombat = true;
             combat.LineOfSight().gameObject.GetComponent<EnemyController>().UpdateHealth(-damageToDeal);
-            StartCoroutine(floatingText.DisplayFloatingText(combat.LineOfSight().transform.localPosition, damageToDeal.ToString()));
+            StartCoroutine(floatingText.DisplayFloatingText(combat.LineOfSight().transform.position, damageToDeal.ToString()));
             yield return new WaitForSeconds(0.1f);
             damageToDeal = 0;
         }
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.45f);
         attacking = false;
     }
     

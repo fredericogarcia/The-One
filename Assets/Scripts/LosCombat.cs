@@ -9,6 +9,6 @@ public class LosCombat : MonoBehaviour
              1 << LayerMask.NameToLayer("Combat"));
 
          Debug.DrawLine(transform.position, endPosition, hit.collider != null ? Color.green : Color.blue);
-         return hit.collider;
+        return hit.collider != null ? hit.collider : null;
      }
 }

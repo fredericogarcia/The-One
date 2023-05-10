@@ -25,7 +25,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMasterTextureLimit: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -145,6 +145,18 @@ TextureImporter:
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -375,17 +387,17 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      ZombieDeathAnim_5: -1571513797
-      ZombieDeathAnim_3: 1206968525
-      ZombieDeathAnim_7: 718112533
       ZombieDeathAnim_0: 659013748
-      ZombieDeathAnim_4: -1397046702
-      ZombieDeathAnim_8: 1965178266
-      ZombieDeathAnim_6: 842639615
       ZombieDeathAnim_1: 1072445543
-      ZombieDeathAnim_9: 1119836288
       ZombieDeathAnim_2: -1593608915
-  spritePackingTag: 
+      ZombieDeathAnim_3: 1206968525
+      ZombieDeathAnim_4: -1397046702
+      ZombieDeathAnim_5: -1571513797
+      ZombieDeathAnim_6: 842639615
+      ZombieDeathAnim_7: 718112533
+      ZombieDeathAnim_8: 1965178266
+      ZombieDeathAnim_9: 1119836288
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
   assetBundleName: 

@@ -38,7 +38,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private Transform castPoint;
     [SerializeField] private int attackDamage;
-    
+    [SerializeField] private float castPointDistance;
     
     private static readonly int IsAttacking = Animator.StringToHash("Attack");
     private static readonly int IsWalking = Animator.StringToHash("IsWalking");
@@ -111,11 +111,11 @@ public class EnemyController : MonoBehaviour
         {
             case true:
                 spriteRenderer.flipX = true;
-                castPoint.localPosition = new Vector3(0.2f,castPoint.localPosition.y,castPoint.localPosition.z);
+                castPoint.localPosition = new Vector3(castPointDistance,castPoint.localPosition.y,castPoint.localPosition.z);
                 break;
             case false:
                 spriteRenderer.flipX = false;
-                castPoint.localPosition = new Vector3(-0.2f,castPoint.localPosition.y,-castPoint.localPosition.z);
+                castPoint.localPosition = new Vector3(-castPointDistance,castPoint.localPosition.y,-castPoint.localPosition.z);
                 break;
         }
     }
